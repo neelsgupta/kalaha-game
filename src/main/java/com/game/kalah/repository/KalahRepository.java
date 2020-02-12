@@ -1,10 +1,13 @@
 package com.game.kalah.repository;
 
-import com.game.kalah.dto.Kalah;
+import com.game.kalah.domain.Game;
 
 public interface KalahRepository {
 
-	public Kalah create();
+	public void create(Game game);
 
-	public Kalah play(String gameId, String pitId);
+	public Game get(String gameId) throws Exception;
+
+	public void save(String gameId, Game game);
+
 }

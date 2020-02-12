@@ -8,7 +8,7 @@ public class KalahMovedResponse {
 
 	private String uri;
 
-	private Map<String, String> status;
+	private Map<Integer, Integer> status;
 
 	/**
 	 * @return the id
@@ -43,15 +43,15 @@ public class KalahMovedResponse {
 	/**
 	 * @return the status
 	 */
-	public Map<String, String> getStatus() {
+	public Map<Integer, Integer> getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status
-	 *            the status to set
+	 *  the status to set
 	 */
-	public void setStatus(Map<String, String> status) {
+	public void setStatus(Map<Integer, Integer> status) {
 		this.status = status;
 	}
 

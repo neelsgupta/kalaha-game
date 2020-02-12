@@ -18,11 +18,11 @@ public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 }
 
- class ErrorMessage{
-	
-	 private String id;
-	 
-	 private String message;
+class ErrorMessage {
+
+	private String id;
+
+	private String message;
 
 	/**
 	 * @return the id
@@ -32,7 +32,8 @@ public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -46,10 +47,11 @@ public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * @param message the message to set
+	 * @param message
+	 *            the message to set
 	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	 
+
 }

@@ -23,6 +23,7 @@ public class KalahInitResponse {
 
 	@Override
 	public String toString() {
-		return "id: " + id.toString() + "uri: " + uri;
+		return "KalahInitResponse [id=" + id + ", uri=" + uri + "]";
 	}
+
 }

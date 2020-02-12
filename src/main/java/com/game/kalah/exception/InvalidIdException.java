@@ -1,6 +1,6 @@
 package com.game.kalah.exception;
 
-public class InvalidIdException extends Exception {
+public class InvalidIdException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,8 @@ public class InvalidIdException extends Exception {
 	}
 
 	public InvalidIdException(String message) {
-		super(message);
+		super();
+		this.message = message;
 	}
 
 	public InvalidIdException(String id, String message) {

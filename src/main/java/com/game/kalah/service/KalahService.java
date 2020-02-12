@@ -1,11 +1,12 @@
 package com.game.kalah.service;
 
-import com.game.kalah.dto.Kalah;
+import com.game.kalah.domain.Game;
 
 public interface KalahService {
 
-	public Kalah createGame();
+	public Game create();
 
-	public Kalah playGame(String gameId, String pitId);
+	public Game play(String gameId, String pitId) throws Exception;
 
 }
+	

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.game.kalah.dto.Kalah;
+import com.game.kalah.domain.Game;
 import com.game.kalah.dto.KalahInitResponse;
 import com.game.kalah.dto.KalahMovedResponse;
 import com.game.kalah.mapper.KalahMapper;
@@ -29,11 +29,11 @@ public class KalahController {
 
 	@Autowired
 	public KalahMapper kalahMapper;
-	
+
 	@PostMapping(GAMES)
 	public ResponseEntity<KalahInitResponse> createGame() {
-		Kalah kalah = kalahService.createGame();
-		KalahInitResponse kalahInitResponse = kalahMapper.mapToIntiDto(kalah);
+		Game game = kalahService.create();
+		KalahInitResponse kalahInitResponse = kalahMapper.mapToIntiDto(game);
 		return ResponseEntity.status(HttpStatus.CREATED).body(kalahInitResponse);
 	}
 
@@ -41,8 +41,8 @@ public class KalahController {
 	public ResponseEntity<KalahMovedResponse> playGame(@PathVariable("gameId") String gameId,
 			@PathVariable("pitId") String pitId) throws NumberFormatException, Exception {
 		kalahValidator.validate(gameId, pitId);
-		Kalah kalah = kalahService.playGame(gameId, pitId);
-		KalahMovedResponse kalahMovedResponse = kalahMapper.mapToMovedDto(kalah);
+		Game game = kalahService.play(gameId, pitId);
+		KalahMovedResponse kalahMovedResponse = kalahMapper.mapToMovedDto(game);
 		return ResponseEntity.status(HttpStatus.OK).body(kalahMovedResponse);
 	}
 
