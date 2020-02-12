@@ -16,25 +16,24 @@ public class KalahRepositoryImpl implements KalahRepository {
 	@Autowired
 	KalahMapper kalahMapper;
 
-	public static Map<String, Game> newGame = new ConcurrentHashMap<>();
+	public static Map<String, Game> gameRepo = new ConcurrentHashMap<>();
 
 	@Override
 	public void create(Game game) {
-		newGame.put(game.getId(), game);
+		gameRepo.put(game.getId(), game);
 	}
 
 	@Override
 	public Game get(String gameId) throws Exception {
-		Game game = newGame.get(gameId);
-		if (game == null) {
+		if (!gameRepo.containsKey(gameId)) {
 			throw new InvalidIdException(gameId, "Invalid gameId");
 		}
-		return game;
+		return gameRepo.get(gameId);
 	}
 
 	@Override
 	public void save(String gameId, Game game) {
-		newGame.put(gameId, game);	
+		gameRepo.put(gameId, game);
 	}
 
 }

@@ -40,11 +40,13 @@ public class KalahMapper {
 		return kalahInit;
 	}
 
-	public KalahMovedResponse mapToMovedDto(Game kalah) {
+	public KalahMovedResponse mapToMovedDto(Game game) {
 		KalahMovedResponse response = new KalahMovedResponse();
-		response.setId(kalah.getId());
-		response.setUrl(kalah.getUri());
-		response.setStatus(kalah.getScoreBoard());
+		response.setId(game.getId());
+		response.setUri(game.getUri());
+		response.setScore(game.getScoreBoard());
+		response.setGameStatus(game.getGameStatus());
+		response.setNextPlayer(String.valueOf(game.getPlayer().getPlayerId()));
 		return response;
 	}
 

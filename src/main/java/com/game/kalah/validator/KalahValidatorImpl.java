@@ -11,22 +11,26 @@ import com.game.kalah.repository.KalahRepositoryImpl;
 @Component
 public class KalahValidatorImpl implements KalahValidator {
 
-	public void validate(String gameId, String pitId) throws Exception {
+	public void validate(String gameId, Integer pitId) throws Exception {
 		isValidGameId(gameId);
-		isValidPitId(gameId, Integer.parseInt(pitId));
+		isValidPitId(gameId, pitId);
 	}
 
 	private void isValidGameId(String gameId) throws Exception {
-		Map<String, Game> game = KalahRepositoryImpl.newGame;
+		Map<String, Game> game = KalahRepositoryImpl.gameRepo;
 		if (game != null && !game.containsKey(gameId)) {
 			throw new InvalidIdException(gameId, "Invalid gameId");
 		}
 	}
 
 	private void isValidPitId(String gameId, int pitId) throws Exception {
-		// TODO convert pitId here to int and check validity
-		if (!(pitId > 0 && pitId < 14 && pitId != 7)) {
-			throw new InvalidIdException(gameId, "Invalid pitId");
+
+		if (!(pitId > 0 && pitId < 14)) {
+			throw new InvalidIdException(String.valueOf(pitId), "Invalid pitId, Please enter valid pitId");
+		}
+
+		if (!(pitId != 7 && pitId != 14)) {
+			throw new InvalidIdException(String.valueOf(pitId), "Invalid pitId, You cannot enter Home pitId");
 		}
 	}
 }

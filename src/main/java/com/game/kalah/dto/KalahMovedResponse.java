@@ -1,58 +1,71 @@
 package com.game.kalah.dto;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.game.kalah.domain.GameStatus;
+
+@JsonPropertyOrder({ "id", "uri", "status" })
 public class KalahMovedResponse {
 
+	@JsonProperty
 	private String id;
 
+	@JsonProperty
 	private String uri;
 
-	private Map<Integer, Integer> status;
+	@JsonProperty
+	private Map<Integer, Integer> score;
+	
+	@JsonProperty
+	private String nextPlayer;
+	
+	@JsonProperty
+	private GameStatus gameStatus;
 
-	/**
-	 * @return the id
-	 */
 	public String getId() {
 		return id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
+	public String getUri() {
 		return uri;
 	}
 
-	/**
-	 * @param url
-	 *            the url to set
-	 */
-	public void setUrl(String url) {
-		this.uri = url;
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 
-	/**
-	 * @return the status
-	 */
-	public Map<Integer, Integer> getStatus() {
-		return status;
+	public Map<Integer, Integer> getScore() {
+		if (score == null) {
+			score = new LinkedHashMap<>();
+		}
+		return score;
 	}
 
-	/**
-	 * @param status
-	 *  the status to set
-	 */
-	public void setStatus(Map<Integer, Integer> status) {
-		this.status = status;
+	public void setScore(Map<Integer, Integer> score) {
+		this.score = score;
+	}
+	
+	public String getNextPlayer() {
+		return nextPlayer;
+	}
+
+	public void setNextPlayer(String nextPlayer) {
+		this.nextPlayer = nextPlayer;
+	}
+
+	public GameStatus getGameStatus() {
+		return gameStatus;
+	}
+
+	public void setGameStatus(GameStatus gameStatus) {
+		this.gameStatus = gameStatus;
 	}
 
 }

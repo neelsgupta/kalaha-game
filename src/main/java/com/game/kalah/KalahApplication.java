@@ -8,6 +8,6 @@ public class KalahApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KalahApplication.class, args);
-	}
-
+	}	
+	
 }

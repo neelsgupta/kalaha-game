@@ -4,54 +4,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.game.kalah.dto.KalahErrorResponse;
 
 @ControllerAdvice
 public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(value = { InvalidIdException.class })
-	protected ResponseEntity<ErrorMessage> handleConflict(InvalidIdException ex) {
-		ErrorMessage em = new ErrorMessage();
-		em.setId(ex.getId());
-		em.setMessage(ex.getMessage());
-		return new ResponseEntity<ErrorMessage>(em, HttpStatus.BAD_REQUEST);
+	@ExceptionHandler(Exception.class)
+	protected ResponseEntity<KalahErrorResponse> handleConflict(InvalidIdException ex) {
+		KalahErrorResponse kalahErrorResponse = new KalahErrorResponse();
+		kalahErrorResponse.setId(ex.getId());
+		kalahErrorResponse.setMessage(ex.getMessage());
+		return new ResponseEntity<KalahErrorResponse>(kalahErrorResponse, HttpStatus.BAD_REQUEST);
 	}
-}
-
-class ErrorMessage {
-
-	private String id;
-
-	private String message;
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/**
-	 * @param message
-	 *            the message to set
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
+	
+	@ExceptionHandler(GameEndedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<KalahErrorResponse> handleConflict(GameEndedException ex) {
+		KalahErrorResponse kalahErrorResponse = new KalahErrorResponse();
+		//kalahErrorResponse.setId(ex.getId());
+		kalahErrorResponse.setMessage(ex.getMessage());
+		kalahErrorResponse.setGameStatus(ex.getGameStatus());
+		return new ResponseEntity<KalahErrorResponse>(kalahErrorResponse, HttpStatus.CONFLICT);
+    }
 }

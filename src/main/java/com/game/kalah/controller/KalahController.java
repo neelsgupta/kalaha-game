@@ -39,7 +39,7 @@ public class KalahController {
 
 	@PutMapping(PLAY_GAME)
 	public ResponseEntity<KalahMovedResponse> playGame(@PathVariable("gameId") String gameId,
-			@PathVariable("pitId") String pitId) throws NumberFormatException, Exception {
+			@PathVariable("pitId") Integer pitId) throws Exception {
 		kalahValidator.validate(gameId, pitId);
 		Game game = kalahService.play(gameId, pitId);
 		KalahMovedResponse kalahMovedResponse = kalahMapper.mapToMovedDto(game);

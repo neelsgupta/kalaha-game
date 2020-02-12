@@ -9,4 +9,4 @@ target/
 *.iws
 *.iml
 *.ipr
-
+.settings

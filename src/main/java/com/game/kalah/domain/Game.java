@@ -1,17 +1,18 @@
 package com.game.kalah.domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Game {
 
 	private String id;
-	
+
 	private Map<Integer, Integer> scoreBoard;
-	
+
 	private GameStatus gameStatus;
-	
+
 	private Player player;
-	
+
 	private String uri;
 
 	public String getId() {
@@ -23,6 +24,9 @@ public class Game {
 	}
 
 	public Map<Integer, Integer> getScoreBoard() {
+		if (scoreBoard == null) {
+			new LinkedHashMap<>();
+		}
 		return scoreBoard;
 	}
 
@@ -45,7 +49,7 @@ public class Game {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-	
+
 	public String getUri() {
 		return uri;
 	}
@@ -59,6 +63,5 @@ public class Game {
 		return "Game [id=" + id + ", scoreBoard=" + scoreBoard + ", gameStatus=" + gameStatus + ", player=" + player
 				+ ", uri=" + uri + "]";
 	}
-	
-	
+
 }

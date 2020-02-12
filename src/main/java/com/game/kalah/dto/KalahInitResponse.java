@@ -1,8 +1,15 @@
 package com.game.kalah.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "id", "uri" })
 public class KalahInitResponse {
 
+	@JsonProperty
 	private String id;
+
+	@JsonProperty
 	private String uri;
 
 	public String getId() {
