@@ -10,24 +10,24 @@ public enum Player {
 
 	SECOND_PLAYER(2, 14, Arrays.asList(8, 9, 10, 11, 12, 13));
 
-	private final int kalahId;
-	
 	private final int playerId;
+
+	private final int homeId;
 
 	private final List<Integer> pits;
 
-	Player(int playerId, int kalahId, List<Integer> pits) {
+	Player(int playerId, int homeId, List<Integer> pits) {
 		this.playerId = playerId;
-		this.kalahId = kalahId;
+		this.homeId = homeId;
 		this.pits = Collections.unmodifiableList(pits);
 	}
 
 	public int getPlayerId() {
 		return playerId;
 	}
-	
-	public int getKalahId() {
-		return kalahId;
+
+	public int getHomeId() {
+		return homeId;
 	}
 
 	public List<Integer> getPits() {

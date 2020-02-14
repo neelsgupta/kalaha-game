@@ -4,10 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.game.kalah.domain.GameStatus;
 
-@JsonPropertyOrder({ "id", "uri", "status" })
 public class KalahMovedResponse {
 
 	@JsonProperty
@@ -18,10 +16,10 @@ public class KalahMovedResponse {
 
 	@JsonProperty
 	private Map<Integer, Integer> score;
-	
+
 	@JsonProperty
 	private String nextPlayer;
-	
+
 	@JsonProperty
 	private GameStatus gameStatus;
 
@@ -51,7 +49,7 @@ public class KalahMovedResponse {
 	public void setScore(Map<Integer, Integer> score) {
 		this.score = score;
 	}
-	
+
 	public String getNextPlayer() {
 		return nextPlayer;
 	}

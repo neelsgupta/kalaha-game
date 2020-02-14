@@ -13,20 +13,20 @@ import com.game.kalah.dto.KalahErrorResponse;
 public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	protected ResponseEntity<KalahErrorResponse> handleConflict(InvalidIdException ex) {
 		KalahErrorResponse kalahErrorResponse = new KalahErrorResponse();
 		kalahErrorResponse.setId(ex.getId());
 		kalahErrorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<KalahErrorResponse>(kalahErrorResponse, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(GameEndedException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<KalahErrorResponse> handleConflict(GameEndedException ex) {
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public ResponseEntity<KalahErrorResponse> handleConflict(GameEndedException ex) {
 		KalahErrorResponse kalahErrorResponse = new KalahErrorResponse();
-		//kalahErrorResponse.setId(ex.getId());
 		kalahErrorResponse.setMessage(ex.getMessage());
 		kalahErrorResponse.setGameStatus(ex.getGameStatus());
 		return new ResponseEntity<KalahErrorResponse>(kalahErrorResponse, HttpStatus.CONFLICT);
-    }
+	}
 }

@@ -1,5 +1,7 @@
 package com.game.kalah.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +16,44 @@ public class KalahServiceImpl implements KalahService {
 
 	@Autowired
 	public KalahRepository repository;
-	
+
 	@Autowired
 	public KalahMapper kalahMapper;
 
 	@Autowired
 	public GameService gameService;
 
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+
 	public Game create() {
+		log.info("create game started");
+
 		Game game = kalahMapper.createGame();
 		repository.create(game);
+
+		log.info("create game ended with gameId: " + game.getId());
 		return game;
 	}
 
 	public Game play(String gameId, Integer pitId) throws Exception {
+		log.info("game play method started for gameId: "+gameId);
+		
 		Game game = repository.get(gameId);
 		checkGameStatus(game);
 		gameService.makeMove(game, pitId);
 		repository.save(gameId, game);
+		
+		log.info("game play method ended for gameId: "+gameId);
 		return game;
 	}
-	
+
 	private void checkGameStatus(Game game) {
-        GameStatus status = game.getGameStatus();
-        if (status != GameStatus.IN_PROGRESS) {
-            throw new GameEndedException(game.getId(), "Game has been already terminated with status:" + status, status);
-        }
-    }
+		GameStatus status = game.getGameStatus();
+		if (status != GameStatus.IN_PROGRESS) {
+			log.error("Game already termianated for gameId: "+game.getId());
+			throw new GameEndedException(game.getId(), "Game has been already terminated with status:" + status,
+					status);
+		}
+	}
 
 }
