@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.game.kalah.domain.Game;
 import com.game.kalah.domain.GameStatus;
 import com.game.kalah.domain.Player;
+import com.game.kalah.exception.GameEndedException;
 import com.game.kalah.exception.InvalidIdException;
 
 @Service

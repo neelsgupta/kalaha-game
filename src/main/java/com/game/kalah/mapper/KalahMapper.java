@@ -44,7 +44,7 @@ public class KalahMapper {
 		KalahInitResponse kalahInit = new KalahInitResponse();
 		kalahInit.setId(game.getId());
 		kalahInit.setUri(game.getUri());
-		log.debug("mapToIntiDto method started.");
+		log.debug("mapToIntiDto method ended.");
 		return kalahInit;
 	}
 
@@ -56,7 +56,7 @@ public class KalahMapper {
 		response.setScore(game.getScoreBoard());
 		response.setGameStatus(game.getGameStatus());
 		response.setNextPlayer(String.valueOf(game.getPlayer().getPlayerId()));
-		log.debug("mapToMovedDto method started.");
+		log.debug("mapToMovedDto method ended.");
 		return response;
 	}
 
