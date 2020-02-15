@@ -50,6 +50,7 @@ public class KalahServiceImpl implements KalahService {
 	private void checkGameStatus(Game game) {
 		GameStatus status = game.getGameStatus();
 		if (status != GameStatus.IN_PROGRESS) {
+			repository.delete(game.getId());
 			log.info("Game already termianated for gameId: "+game.getId());
 			throw new GameEndedException(game.getId(), "Game has been already terminated with status:" + status, status);
 		}

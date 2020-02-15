@@ -7,20 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.game.kalah.constant.KalahConstants;
 import com.game.kalah.domain.Game;
 import com.game.kalah.domain.GameStatus;
 import com.game.kalah.domain.Player;
-import com.game.kalah.exception.GameEndedException;
 import com.game.kalah.exception.InvalidIdException;
 
 @Service
 public class GameService {
-
-	public static final int FIRST_PIT_ID = 1;
-
-	public static final int LAST_PIT_ID = 14;
-
-	public static final int INITIAL_STONES_QUANTITY = 6;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -36,22 +30,22 @@ public class GameService {
 		int lastPit = lastIndex;
 		for (int currentIndex = pitId + 1; currentIndex <= lastIndex; currentIndex++) {
 			int currentPit = currentIndex;
-			if (currentIndex == LAST_PIT_ID && lastIndex != LAST_PIT_ID) {
+			if (currentIndex == KalahConstants.LAST_PIT_ID && lastIndex != KalahConstants.LAST_PIT_ID) {
 				lastIndex = lastIndex - currentIndex;
 				currentIndex = 0;
 			}
 			if (game.getPlayer().getOppositePlayer().getHomeId() != currentPit) {
 				addStonesToPit(currentPit, scoreBoard, 1);
 			} else {
-				if (currentIndex != LAST_PIT_ID) {
+				if (currentIndex != KalahConstants.LAST_PIT_ID) {
 					lastIndex++;
 				} else {
-					lastIndex = FIRST_PIT_ID;
+					lastIndex = KalahConstants.FIRST_PIT_ID;
 					currentIndex = 0;
 				}
 			}
 		}
-		lastPit = lastPit > LAST_PIT_ID ? lastIndex : lastPit;
+		lastPit = lastPit > KalahConstants.LAST_PIT_ID ? lastIndex : lastPit;
 		checkLastPit(lastPit, game);
 
 		if (!playerGotFreeTurn(lastPit, game.getPlayer())) {
@@ -156,7 +150,7 @@ public class GameService {
 	}
 
 	private int getOppositePit(int pitId) {
-		return LAST_PIT_ID - pitId;
+		return KalahConstants.LAST_PIT_ID - pitId;
 	}
 
 	private boolean playerGotFreeTurn(int lastPitId, Player player) {

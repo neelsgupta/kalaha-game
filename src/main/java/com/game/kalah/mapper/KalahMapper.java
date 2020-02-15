@@ -1,6 +1,7 @@
 package com.game.kalah.mapper;
 
 import java.util.Random;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,8 @@ public class KalahMapper {
 	public Game createGame() {
 		log.info("createGame method started.");
 		Game game = new Game();
-		Random rand = new Random();
-		String gameId = String.format("%04d", rand.nextInt(10000));
+		//Random rand = new Random();
+		String gameId = UUID.randomUUID().toString();//String.format("%04d", rand.nextInt(10000));
 		game.setId(gameId);
 		String uri = "http://localhost:" + port + "/games/";
 		game.setUri(uri + gameId);

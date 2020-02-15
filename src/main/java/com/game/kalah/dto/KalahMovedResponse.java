@@ -12,13 +12,13 @@ public class KalahMovedResponse {
 	private String id;
 
 	@JsonProperty
-	private String uri;
-
-	@JsonProperty
 	private Map<Integer, Integer> score;
 
 	@JsonProperty
 	private String nextPlayer;
+
+	@JsonProperty
+	private String uri;
 
 	@JsonProperty
 	private GameStatus gameStatus;

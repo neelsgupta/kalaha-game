@@ -43,4 +43,14 @@ public class KalahRepositoryImpl implements KalahRepository {
 		gameRepo.put(gameId, game);
 	}
 
+	@Override
+	public void delete(String gameId) {
+		if (!gameRepo.containsKey(gameId)) {
+			log.error("Game not found in game repo, invalid gameId: " + gameId);
+			throw new InvalidIdException(gameId, "Invalid gameId");
+		}
+		gameRepo.remove(gameId);
+		
+	}
+
 }

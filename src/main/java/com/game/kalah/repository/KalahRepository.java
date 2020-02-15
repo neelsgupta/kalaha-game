@@ -9,5 +9,7 @@ public interface KalahRepository {
 	public Game get(String gameId) throws Exception;
 
 	public void save(String gameId, Game game);
+	
+	public void delete(String gameId);
 
 }

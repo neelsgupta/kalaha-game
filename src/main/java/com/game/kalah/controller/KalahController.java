@@ -20,7 +20,6 @@ import com.game.kalah.service.KalahService;
 import com.game.kalah.validator.KalahValidator;
 
 @RestController
-@Validated
 public class KalahController {
 
 	private static final String GAMES = "/games";
