@@ -23,7 +23,7 @@ public class KalahExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(GameEndedException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
-	public ResponseEntity<KalahErrorResponse> handleConflict(GameEndedException ex) {
+	protected ResponseEntity<KalahErrorResponse> handleConflict(GameEndedException ex) {
 		KalahErrorResponse kalahErrorResponse = new KalahErrorResponse();
 		kalahErrorResponse.setMessage(ex.getMessage());
 		kalahErrorResponse.setGameStatus(ex.getGameStatus());

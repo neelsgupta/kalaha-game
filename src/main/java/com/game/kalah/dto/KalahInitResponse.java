@@ -28,9 +28,4 @@ public class KalahInitResponse {
 		this.uri = uri;
 	}
 
-	@Override
-	public String toString() {
-		return "KalahInitResponse [id=" + id + ", uri=" + uri + "]";
-	}
-
 }

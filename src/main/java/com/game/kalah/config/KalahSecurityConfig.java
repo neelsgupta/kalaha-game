@@ -1,4 +1,4 @@
-package com.game.kalah.config;
+/*package com.game.kalah.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,3 +30,4 @@ public class KalahSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
 }
+*/

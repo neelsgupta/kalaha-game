@@ -8,15 +8,6 @@ public class InvalidIdException extends RuntimeException {
 
 	private String message;
 
-	public InvalidIdException() {
-		super();
-	}
-
-	public InvalidIdException(String message) {
-		super();
-		this.message = message;
-	}
-
 	public InvalidIdException(String id, String message) {
 		super();
 		this.id = id;

@@ -58,10 +58,4 @@ public class Game {
 		this.uri = uri;
 	}
 
-	@Override
-	public String toString() {
-		return "Game [id=" + id + ", scoreBoard=" + scoreBoard + ", gameStatus=" + gameStatus + ", player=" + player
-				+ ", uri=" + uri + "]";
-	}
-
 }

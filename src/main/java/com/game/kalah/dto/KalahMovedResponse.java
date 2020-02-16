@@ -40,9 +40,6 @@ public class KalahMovedResponse {
 	}
 
 	public Map<Integer, Integer> getScore() {
-		if (score == null) {
-			score = new LinkedHashMap<>();
-		}
 		return score;
 	}
 

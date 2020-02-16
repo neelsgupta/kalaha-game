@@ -27,10 +27,10 @@
 		</dependency>
 
 		<!-- spring security -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!-- spring swagger -->
 		<dependency>
@@ -47,11 +47,11 @@
 		</dependency>
 
 		<!-- spring security test -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>junit</groupId>     <!-- NOT org.junit here -->

@@ -29,7 +29,7 @@ public class KalahRepositoryImpl implements KalahRepository {
 	}
 
 	@Override
-	public Game get(String gameId) throws Exception {
+	public Game get(String gameId) throws InvalidIdException {
 		if (!gameRepo.containsKey(gameId)) {
 			log.error("Game not found in game repo, invalid gameId: " + gameId);
 			throw new InvalidIdException(gameId, "Invalid gameId");
@@ -50,7 +50,7 @@ public class KalahRepositoryImpl implements KalahRepository {
 			throw new InvalidIdException(gameId, "Invalid gameId");
 		}
 		gameRepo.remove(gameId);
-		
+
 	}
 
 }
