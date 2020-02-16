@@ -15,14 +15,14 @@ public class KalahValidatorImpl implements KalahValidator {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public void validate(String gameId, Integer pitId) throws Exception {
+	public void validate(String gameId, Integer pitId) throws InvalidIdException {
 		log.info("validation for gameId and pitId started.");
 		isValidGameId(gameId);
 		isValidPitId(gameId, pitId);
 		log.info("validation for gameId and pitId ended.");
 	}
 
-	private void isValidGameId(String gameId) throws Exception {
+	private void isValidGameId(String gameId) throws InvalidIdException {
 		Map<String, Game> game = KalahRepositoryImpl.gameRepo;
 		if (game != null && !game.containsKey(gameId)) {
 			log.error("Validation failed for gameId: "+gameId);
@@ -30,7 +30,7 @@ public class KalahValidatorImpl implements KalahValidator {
 		}
 	}
 
-	private void isValidPitId(String gameId, int pitId) throws Exception {
+	private void isValidPitId(String gameId, int pitId) throws InvalidIdException {
 
 		if (!(pitId > 0 && pitId < 14)) {
 			log.error("Validation failed for pitId, entered pitId is out of bound. "+String.valueOf(pitId));

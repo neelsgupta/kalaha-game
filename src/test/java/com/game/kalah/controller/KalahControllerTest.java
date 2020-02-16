@@ -1,6 +1,11 @@
-/*package com.game.kalah.controller;
+package com.game.kalah.controller;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -10,13 +15,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.game.kalah.controller.KalahController;
-import com.game.kalah.domain.Kalah;
+import com.game.kalah.domain.Game;
 import com.game.kalah.dto.KalahInitResponse;
 import com.game.kalah.dto.KalahMovedResponse;
 import com.game.kalah.exception.InvalidIdException;
@@ -24,7 +27,8 @@ import com.game.kalah.mapper.KalahMapper;
 import com.game.kalah.service.KalahService;
 import com.game.kalah.validator.KalahValidator;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 public class KalahControllerTest {
 
 	@InjectMocks
@@ -45,49 +49,43 @@ public class KalahControllerTest {
 
 	@Test
 	public void testCreateGame() {
-		Kalah kalah = new Kalah();
+		Game game = new Game();
 		KalahInitResponse kalahInitResponse = new KalahInitResponse();
-		when(kalahService.createGame()).thenReturn(kalah);
-		when(kalahMapper.mapToIntiDto(kalah)).thenReturn(kalahInitResponse);
+		when(kalahService.create()).thenReturn(game);
+		when(kalahMapper.mapToIntiDto(game)).thenReturn(kalahInitResponse);
 		ResponseEntity<KalahInitResponse> responseEntity = kalahController.createGame();
 
-		verify(kalahService).createGame();
-		verify(kalahMapper).mapToIntiDto(kalah);
+		verify(kalahService).create();
+		verify(kalahMapper).mapToIntiDto(game);
 		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 		Assert.assertEquals(responseEntity.getBody(), kalahInitResponse);
 	}
 
 	@Test
-	public void testPlayGame() throws NumberFormatException, Exception {
-		Kalah kalah = new Kalah();
+	public void testPlayGame() throws Exception {
+		Game game = new Game();
 		KalahMovedResponse kalahMovedResponse = new KalahMovedResponse();
-		doNothing().when(kalahValidator).validate(Mockito.anyString(), Mockito.anyString());
-		when(kalahService.playGame(Mockito.anyString(), Mockito.anyString())).thenReturn(kalah);
-		when(kalahMapper.mapToMovedDto(kalah)).thenReturn(kalahMovedResponse);
-		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(Mockito.anyString(), Mockito.anyString());
-		
-		verify(kalahValidator).validate(Mockito.anyString(), Mockito.anyString());
-		verify(kalahService).playGame(Mockito.anyString(), Mockito.anyString());
-		verify(kalahMapper).mapToMovedDto(kalah);
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-		Assert.assertEquals(responseEntity.getBody(), kalahMovedResponse);
-	}
-	
-	@Test
-	public void testPlayGameThrowExceptionIfInvalidGameId() throws NumberFormatException, Exception {
-		Kalah kalah = new Kalah();
-		KalahMovedResponse kalahMovedResponse = new KalahMovedResponse();
-		doNothing().when(kalahValidator).validate(Mockito.anyString(), Mockito.anyString());
-		when(kalahService.playGame(Mockito.anyString(), Mockito.anyString())).thenReturn(kalah);
-		when(kalahMapper.mapToMovedDto(kalah)).thenReturn(kalahMovedResponse);
-		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(Mockito.anyString(), Mockito.anyString());
-		
-		verify(kalahValidator).validate(Mockito.anyString(), Mockito.anyString());
-		verify(kalahService).playGame(Mockito.anyString(), Mockito.anyString());
-		verify(kalahMapper).mapToMovedDto(kalah);
+		doNothing().when(kalahValidator).validate(anyString(), anyInt());
+		when(kalahService.play(anyString(), anyInt())).thenReturn(game);
+		when(kalahMapper.mapToMovedDto(game)).thenReturn(kalahMovedResponse);
+		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(anyString(), anyInt());
+
+		verify(kalahValidator).validate(anyString(), anyInt());
+		verify(kalahService).play(anyString(), anyInt());
+		verify(kalahMapper).mapToMovedDto(game);
 		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 		Assert.assertEquals(responseEntity.getBody(), kalahMovedResponse);
 	}
 
+	@Test(expected = InvalidIdException.class)
+	public void testPlayGameThrowExceptionIfInvalidGameId() throws Exception {
+		Game game = new Game();
+		doThrow(InvalidIdException.class).when(kalahValidator).validate(anyString(), anyInt());
+		kalahController.playGame(anyString(), anyInt());
+
+		verify(kalahValidator).validate(anyString(), anyInt());
+		verify(kalahService, never()).play(anyString(), anyInt());
+		verify(kalahMapper, never()).mapToMovedDto(game);
+	}
+
 }
-*/

@@ -3,7 +3,7 @@ package com.game.kalah.repository;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class KalahGame {
+public class KalahGameUtil {
 
 	public static Map<Integer, Integer> setInitScoreBoard() {
 

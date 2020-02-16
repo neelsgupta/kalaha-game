@@ -34,7 +34,7 @@ public class GameService {
 				lastIndex = lastIndex - currentIndex;
 				currentIndex = 0;
 			}
-			if (game.getPlayer().getOppositePlayer().getHomeId() != currentPit) {
+			if (game.getPlayer().getNextPlayer().getHomeId() != currentPit) {
 				addStonesToPit(currentPit, scoreBoard, 1);
 			} else {
 				if (currentIndex != KalahConstants.LAST_PIT_ID) {
@@ -49,7 +49,7 @@ public class GameService {
 		checkLastPit(lastPit, game);
 
 		if (!playerGotFreeTurn(lastPit, game.getPlayer())) {
-			game.setPlayer(game.getPlayer().getOppositePlayer());
+			game.setPlayer(game.getPlayer().getNextPlayer());
 		}
 		if (isGameTerminated(game)) {
 			GameStatus winner = findTheWinner(game);
@@ -92,12 +92,12 @@ public class GameService {
 
 		boolean playerPitsAreEmpty = pits.stream().map(scoreBoard::get).allMatch(stoneNumbers -> stoneNumbers == 0);
 
-		boolean oppositePlayerPitsAreEmpty = player.getOppositePlayer().getPits().stream().map(scoreBoard::get)
+		boolean oppositePlayerPitsAreEmpty = player.getNextPlayer().getPits().stream().map(scoreBoard::get)
 				.allMatch(stoneNumbers -> stoneNumbers == 0);
 
 		if (playerPitsAreEmpty || oppositePlayerPitsAreEmpty) {
 			addAllRemainedStonesToHome(player, scoreBoard);
-			addAllRemainedStonesToHome(player.getOppositePlayer(), scoreBoard);
+			addAllRemainedStonesToHome(player.getNextPlayer(), scoreBoard);
 			return true;
 		}
 		return false;

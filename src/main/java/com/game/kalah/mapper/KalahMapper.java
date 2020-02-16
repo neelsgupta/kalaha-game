@@ -1,6 +1,5 @@
 package com.game.kalah.mapper;
 
-import java.util.Random;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -14,7 +13,7 @@ import com.game.kalah.domain.GameStatus;
 import com.game.kalah.domain.Player;
 import com.game.kalah.dto.KalahInitResponse;
 import com.game.kalah.dto.KalahMovedResponse;
-import com.game.kalah.repository.KalahGame;
+import com.game.kalah.repository.KalahGameUtil;
 
 @Component
 @ConfigurationProperties
@@ -28,12 +27,11 @@ public class KalahMapper {
 	public Game createGame() {
 		log.info("createGame method started.");
 		Game game = new Game();
-		//Random rand = new Random();
-		String gameId = UUID.randomUUID().toString();//String.format("%04d", rand.nextInt(10000));
+		String gameId = UUID.randomUUID().toString();
 		game.setId(gameId);
 		String uri = "http://localhost:" + port + "/games/";
 		game.setUri(uri + gameId);
-		game.setScoreBoard(KalahGame.setInitScoreBoard());
+		game.setScoreBoard(KalahGameUtil.setInitScoreBoard());
 		game.setGameStatus(GameStatus.IN_PROGRESS);
 		game.setPlayer(Player.FIRST_PLAYER);
 		log.info("createGame method ended.");

@@ -34,7 +34,7 @@ public enum Player {
 		return pits;
 	}
 
-	public Player getOppositePlayer() {
+	public Player getNextPlayer() {
 		return this == FIRST_PLAYER ? SECOND_PLAYER : FIRST_PLAYER;
 	}
 
