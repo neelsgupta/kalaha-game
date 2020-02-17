@@ -14,6 +14,8 @@ public class Game {
 	private Player player;
 
 	private String uri;
+	
+	private long lastUpdated;
 
 	public String getId() {
 		return id;
@@ -56,6 +58,14 @@ public class Game {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public Long getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Long lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 }

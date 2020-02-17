@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import com.game.kalah.domain.Game;
@@ -20,7 +21,7 @@ public class KalahRepositoryImpl implements KalahRepository {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public static Map<String, Game> gameRepo = new ConcurrentHashMap<>();
+	public static final Map<String, Game> gameRepo = new ConcurrentHashMap<>();
 
 	@Override
 	public void create(Game game) {
@@ -52,5 +53,19 @@ public class KalahRepositoryImpl implements KalahRepository {
 		gameRepo.remove(gameId);
 
 	}
+	
+	@Scheduled(fixedRate = 300000)
+    public void deleteOldGame(){
+        log.debug("clearing the old games");
+        log.debug("size of the map {}", gameRepo.size());
+
+        for(Map.Entry<String, Game> entry: gameRepo.entrySet()){
+            long diff = (System.currentTimeMillis() - entry.getValue().getLastUpdated());
+            long diffMinutes = diff / (60 * 1000) % 60;
+            if( diffMinutes > 60){
+            	gameRepo.remove(entry.getKey());
+            }
+        }
+    }
 
 }

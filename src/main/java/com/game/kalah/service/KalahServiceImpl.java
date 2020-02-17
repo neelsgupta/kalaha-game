@@ -50,6 +50,7 @@ public class KalahServiceImpl implements KalahService {
 		log.info("game play method started for gameId: " + gameId);
 		Game game = repository.get(gameId);
 		checkGameStatus(game);
+		gameLastUpdated(game);
 		gameService.makeMove(game, pitId);
 		repository.save(gameId, game);
 
@@ -65,6 +66,10 @@ public class KalahServiceImpl implements KalahService {
 			throw new GameEndedException(game.getId(), "Game has been already terminated with status:" + status,
 					status);
 		}
+	}
+	
+	private void gameLastUpdated(Game game){
+		game.setLastUpdated(System.currentTimeMillis());
 	}
 
 }
