@@ -56,7 +56,6 @@ public class KalahController {
 	public ResponseEntity<KalahMovedResponse> getGame(@PathVariable("gameId") String gameId) {
 		log.info("entering to getGame endpoint.");
 
-		kalahValidator.validateGame(gameId);
 		Game game = kalahService.get(gameId);
 		KalahMovedResponse kalahMovedResponse = kalahMapper.mapToMovedDto(game);
 
@@ -69,7 +68,7 @@ public class KalahController {
 			@PathVariable("pitId") Integer pitId) throws Exception {
 		log.info("entering to playGame endpoint.");
 
-		kalahValidator.validate(gameId, pitId);
+		kalahValidator.validatePitId(pitId);
 		Game game = kalahService.play(gameId, pitId);
 		KalahMovedResponse kalahMovedResponse = kalahMapper.mapToMovedDto(game);
 
