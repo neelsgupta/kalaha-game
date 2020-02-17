@@ -29,8 +29,6 @@ public class KalahMapper {
 		Game game = new Game();
 		String gameId = UUID.randomUUID().toString();
 		game.setId(gameId);
-		String uri = "http://localhost:" + port + "/games/";
-		game.setUri(uri + gameId);
 		game.setScoreBoard(KalahGameUtil.setInitScoreBoard());
 		game.setGameStatus(GameStatus.IN_PROGRESS);
 		game.setPlayer(Player.FIRST_PLAYER);
@@ -42,8 +40,9 @@ public class KalahMapper {
 	public KalahInitResponse mapToIntiDto(Game game) {
 		log.debug("mapToIntiDto method started.");
 		KalahInitResponse kalahInit = new KalahInitResponse();
-		kalahInit.setId(game.getId());
-		kalahInit.setUri(game.getUri());
+		String gameId = game.getId();
+		kalahInit.setId(gameId);
+		kalahInit.setUri(createGameURL(gameId));
 		log.debug("mapToIntiDto method ended.");
 		return kalahInit;
 	}
@@ -51,13 +50,19 @@ public class KalahMapper {
 	public KalahMovedResponse mapToMovedDto(Game game) {
 		log.debug("mapToMovedDto method started.");
 		KalahMovedResponse response = new KalahMovedResponse();
-		response.setId(game.getId());
-		response.setUri(game.getUri());
+		String gameId = game.getId();
+		response.setId(gameId);
+		response.setUri(createGameURL(gameId));
 		response.setScore(game.getScoreBoard());
 		response.setGameStatus(game.getGameStatus());
 		response.setNextPlayer(String.valueOf(game.getPlayer().getPlayerId()));
 		log.debug("mapToMovedDto method ended.");
 		return response;
+	}
+
+	private String createGameURL(String gameId) {
+		String url = "http://localhost:" + port + "/games/" + gameId;
+		return url;
 	}
 
 }

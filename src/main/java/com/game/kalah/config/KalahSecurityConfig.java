@@ -14,7 +14,9 @@ public class KalahSecurityConfig extends WebSecurityConfigurerAdapter {
     {
         http
          .csrf().disable()
-         .authorizeRequests().anyRequest().authenticated()
+         .authorizeRequests()
+         .anyRequest()
+         .authenticated()
          .and()
          .httpBasic();
     }

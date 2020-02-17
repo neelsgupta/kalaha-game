@@ -46,7 +46,7 @@ public class KalahController {
 		Game game = kalahService.create();
 		KalahInitResponse kalahInitResponse = kalahMapper.mapToIntiDto(game);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("URL", game.getUri());
+		headers.add("URL", kalahInitResponse.getUri());
 
 		log.info("exiting to createGame endpoint.");
 		return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(kalahInitResponse);

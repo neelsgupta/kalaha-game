@@ -13,8 +13,6 @@ public class Game {
 
 	private Player player;
 
-	private String uri;
-	
 	private long lastUpdated;
 
 	public String getId() {
@@ -50,14 +48,6 @@ public class Game {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}
-
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
 	}
 
 	public Long getLastUpdated() {

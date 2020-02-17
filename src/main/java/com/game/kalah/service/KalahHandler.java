@@ -14,7 +14,7 @@ import com.game.kalah.domain.Player;
 import com.game.kalah.exception.InvalidIdException;
 
 @Service
-public class GameService {
+public class KalahHandler {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 

@@ -3,7 +3,8 @@ package com.game.kalah.mapper;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,33 +28,31 @@ public class KalahMapperTest {
 	@Test
 	public void testCreateGame() {
 		Game game = kalahMapper.createGame();
-		Assert.assertNotNull(game.getId());
-		Assert.assertNotNull(game.getUri());
-		Assert.assertNotNull(game.getScoreBoard());
-		Assert.assertEquals(Player.FIRST_PLAYER, game.getPlayer());
-		Assert.assertEquals(GameStatus.IN_PROGRESS, game.getGameStatus());
+		assertNotNull(game.getId());
+		assertNotNull(game.getScoreBoard());
+		assertEquals(Player.FIRST_PLAYER, game.getPlayer());
+		assertEquals(GameStatus.IN_PROGRESS, game.getGameStatus());
 	}
 
 	@Test
 	public void testMapToIntiDto() {
 		KalahInitResponse kalahInit = kalahMapper.mapToIntiDto(initGame());
-		Assert.assertEquals(gameId, kalahInit.getId());
-		Assert.assertEquals(gameUri, kalahInit.getUri());
+		assertEquals(gameId, kalahInit.getId());
+		assertNotNull(kalahInit.getUri());
 	}
 
 	@Test
 	public void testMapToMovedDto() {
 		KalahMovedResponse kalahMove = kalahMapper.mapToMovedDto(initGame());
-		Assert.assertEquals(gameId, kalahMove.getId());
-		Assert.assertEquals(gameUri, kalahMove.getUri());
-		Assert.assertEquals(String.valueOf(Player.FIRST_PLAYER.getPlayerId()), kalahMove.getNextPlayer());
-		Assert.assertEquals(GameStatus.IN_PROGRESS, kalahMove.getGameStatus());
+		assertEquals(gameId, kalahMove.getId());
+		assertNotNull(kalahMove.getUri());
+		assertEquals(String.valueOf(Player.FIRST_PLAYER.getPlayerId()), kalahMove.getNextPlayer());
+		assertEquals(GameStatus.IN_PROGRESS, kalahMove.getGameStatus());
 	}
 
 	private Game initGame() {
 		Game game = new Game();
 		game.setId(gameId);
-		game.setUri(gameUri);
 		Map<Integer, Integer> scoreBoard = new LinkedHashMap<>();
 		for (int i = 1; i <= 14; i++) {
 			int value = (i != 7 && i != 14) ? 6 : 0;

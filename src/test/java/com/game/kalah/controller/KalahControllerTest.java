@@ -4,10 +4,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,8 +58,8 @@ public class KalahControllerTest {
 
 		verify(kalahService).create();
 		verify(kalahMapper).mapToIntiDto(game);
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
-		Assert.assertEquals(responseEntity.getBody(), kalahInitResponse);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+		assertEquals(responseEntity.getBody(), kalahInitResponse);
 	}
 
 	@Test
@@ -73,8 +74,8 @@ public class KalahControllerTest {
 		verify(kalahValidator).validate(anyString(), anyInt());
 		verify(kalahService).play(anyString(), anyInt());
 		verify(kalahMapper).mapToMovedDto(game);
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-		Assert.assertEquals(responseEntity.getBody(), kalahMovedResponse);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(responseEntity.getBody(), kalahMovedResponse);
 	}
 
 	@Test(expected = InvalidIdException.class)

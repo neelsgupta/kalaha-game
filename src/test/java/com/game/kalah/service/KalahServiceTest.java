@@ -32,7 +32,7 @@ public class KalahServiceTest {
 	private KalahRepository repository;
 
 	@Mock
-	private GameService gameService;
+	private KalahHandler gameService;
 
 	private String gameId = "anyGameId";
 	private Integer pitId = 1;
@@ -78,7 +78,7 @@ public class KalahServiceTest {
 	@Test(expected = GameEndedException.class)
 	public void testPlayGameThrowExceptionIfGameNotInProgress() throws Exception {
 		Game game = new Game();
-		//doNothing().when(repository).delete(gameId);
+		// doNothing().when(repository).delete(gameId);
 		when(repository.get(gameId)).thenReturn(game);
 		kalahService.play(gameId, pitId);
 

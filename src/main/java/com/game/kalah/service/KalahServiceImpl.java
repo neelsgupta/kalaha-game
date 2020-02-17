@@ -22,7 +22,7 @@ public class KalahServiceImpl implements KalahService {
 	public KalahMapper kalahMapper;
 
 	@Autowired
-	public GameService gameService;
+	public KalahHandler kalahHandler;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -51,7 +51,7 @@ public class KalahServiceImpl implements KalahService {
 		Game game = repository.get(gameId);
 		checkGameStatus(game);
 		gameLastUpdated(game);
-		gameService.makeMove(game, pitId);
+		kalahHandler.makeMove(game, pitId);
 		repository.save(gameId, game);
 
 		log.info("game play method ended for gameId: " + gameId);
