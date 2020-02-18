@@ -32,7 +32,6 @@ public class KalahMapper {
 		game.setScoreBoard(KalahGameUtil.setInitScoreBoard());
 		game.setGameStatus(GameStatus.IN_PROGRESS);
 		game.setPlayer(Player.FIRST_PLAYER);
-		game.setLastUpdated(System.currentTimeMillis());
 		log.info("createGame method ended.");
 		return game;
 	}

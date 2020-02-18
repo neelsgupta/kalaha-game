@@ -7,8 +7,8 @@ public interface KalahService {
 
 	public Game create();
 
-	public Game play(String gameId, Integer pitId) throws Exception;
-
 	public Game get(String gameId) throws InvalidIdException;
+
+	public Game play(String gameId, Integer pitId) throws Exception;
 
 }

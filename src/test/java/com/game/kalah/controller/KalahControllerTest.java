@@ -66,12 +66,12 @@ public class KalahControllerTest {
 	public void testPlayGame() throws Exception {
 		Game game = new Game();
 		KalahMovedResponse kalahMovedResponse = new KalahMovedResponse();
-		doNothing().when(kalahValidator).validate(anyString(), anyInt());
+		doNothing().when(kalahValidator).validatePitId(anyInt());
 		when(kalahService.play(anyString(), anyInt())).thenReturn(game);
 		when(kalahMapper.mapToMovedDto(game)).thenReturn(kalahMovedResponse);
 		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(anyString(), anyInt());
 
-		verify(kalahValidator).validate(anyString(), anyInt());
+		verify(kalahValidator).validatePitId(anyInt());
 		verify(kalahService).play(anyString(), anyInt());
 		verify(kalahMapper).mapToMovedDto(game);
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
@@ -81,10 +81,10 @@ public class KalahControllerTest {
 	@Test(expected = InvalidIdException.class)
 	public void testPlayGameThrowExceptionIfInvalidGameId() throws Exception {
 		Game game = new Game();
-		doThrow(InvalidIdException.class).when(kalahValidator).validate(anyString(), anyInt());
+		doThrow(InvalidIdException.class).when(kalahValidator).validatePitId(anyInt());
 		kalahController.playGame(anyString(), anyInt());
 
-		verify(kalahValidator).validate(anyString(), anyInt());
+		verify(kalahValidator).validatePitId(anyInt());
 		verify(kalahService, never()).play(anyString(), anyInt());
 		verify(kalahMapper, never()).mapToMovedDto(game);
 	}

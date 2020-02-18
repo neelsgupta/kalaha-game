@@ -16,7 +16,7 @@ public class GameEndedException extends RuntimeException {
 		this.message = message;
 		this.gameStatus = gameStatus;
 	}
-
+	
 	public String getGameId() {
 		return gameId;
 	}

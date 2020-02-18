@@ -10,13 +10,13 @@ import com.game.kalah.domain.GameStatus;
 import com.game.kalah.exception.GameEndedException;
 import com.game.kalah.exception.InvalidIdException;
 import com.game.kalah.mapper.KalahMapper;
-import com.game.kalah.repository.KalahRepository;
+import com.game.kalah.repository.GameRepository;
 
 @Service
 public class KalahServiceImpl implements KalahService {
 
 	@Autowired
-	public KalahRepository repository;
+	private GameRepository gameRepository;
 
 	@Autowired
 	public KalahMapper kalahMapper;
@@ -29,8 +29,9 @@ public class KalahServiceImpl implements KalahService {
 	@Override
 	public Game create() {
 		log.info("create game started");
+
 		Game game = kalahMapper.createGame();
-		repository.create(game);
+		gameRepository.save(game);
 
 		log.info("create game ended with gameId: " + game.getId());
 		return game;
@@ -39,7 +40,9 @@ public class KalahServiceImpl implements KalahService {
 	@Override
 	public Game get(String gameId) throws InvalidIdException {
 		log.info("get game started");
-		Game game = repository.get(gameId);
+
+		Game game = gameRepository.findById(gameId)
+				.orElseThrow(() -> new InvalidIdException(gameId, "Game not found for gameId: " + gameId));
 
 		log.info("create get ended with gameId: " + game.getId());
 		return game;
@@ -48,11 +51,10 @@ public class KalahServiceImpl implements KalahService {
 	@Override
 	public Game play(String gameId, Integer pitId) throws Exception {
 		log.info("game play method started for gameId: " + gameId);
-		Game game = repository.get(gameId);
+
+		Game game = get(gameId);
 		checkGameStatus(game);
-		gameLastUpdated(game);
 		kalahHandler.makeMove(game, pitId);
-		repository.save(gameId, game);
 
 		log.info("game play method ended for gameId: " + gameId);
 		return game;
@@ -61,15 +63,11 @@ public class KalahServiceImpl implements KalahService {
 	private void checkGameStatus(Game game) {
 		GameStatus status = game.getGameStatus();
 		if (status != GameStatus.IN_PROGRESS) {
-			repository.delete(game.getId());
-			log.info("Game already termianated for gameId: " + game.getId());
+			gameRepository.delete(game);
+			log.error("Game already termianated for gameId: " + game.getId());
 			throw new GameEndedException(game.getId(), "Game has been already terminated with status:" + status,
 					status);
 		}
-	}
-	
-	private void gameLastUpdated(Game game){
-		game.setLastUpdated(System.currentTimeMillis());
 	}
 
 }
