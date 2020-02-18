@@ -3,18 +3,34 @@ package com.game.kalah.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "games")
 public class Game {
 
+	@Id
 	private String id;
 
+	@ElementCollection
+	@MapKeyColumn(name = "pitId")
+	@Column(name = "value")
 	private Map<Integer, Integer> scoreBoard;
 
+	@Enumerated(value = EnumType.STRING)
 	private GameStatus gameStatus;
 
+	@Enumerated(value = EnumType.STRING)
 	private Player player;
 
-	private long lastUpdated;
-
+	@Column
 	public String getId() {
 		return id;
 	}
@@ -48,14 +64,6 @@ public class Game {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}
-
-	public Long getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setLastUpdated(Long lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 }

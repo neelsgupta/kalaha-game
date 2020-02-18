@@ -1,5 +1,6 @@
 package com.game.kalah.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -7,10 +8,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +26,6 @@ import com.game.kalah.mapper.KalahMapper;
 import com.game.kalah.service.KalahService;
 import com.game.kalah.validator.KalahValidator;
 
-//@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringRunner.class)
 public class KalahControllerTest {
 
@@ -44,13 +41,17 @@ public class KalahControllerTest {
 	@Mock
 	private KalahMapper kalahMapper;
 
+	private Game game;
+	
+	private Integer pitId = 1;
+
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
+		game = new Game();
 	}
 
 	@Test
 	public void testCreateGame() {
-		Game game = new Game();
 		KalahInitResponse kalahInitResponse = new KalahInitResponse();
 		when(kalahService.create()).thenReturn(game);
 		when(kalahMapper.mapToIntiDto(game)).thenReturn(kalahInitResponse);
@@ -61,17 +62,29 @@ public class KalahControllerTest {
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 		assertEquals(responseEntity.getBody(), kalahInitResponse);
 	}
+	
+	@Test
+	public void testGetGame(){
+		KalahMovedResponse kalahMovedResponse = new KalahMovedResponse();
+		when(kalahService.get(anyString())).thenReturn(game);
+		when(kalahMapper.mapToMovedDto(game)).thenReturn(kalahMovedResponse);
+		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.getGame(anyString());
+		
+		verify(kalahService).get(anyString());
+		verify(kalahMapper).mapToMovedDto(game);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(responseEntity.getBody(), kalahMovedResponse);
+	}
 
 	@Test
 	public void testPlayGame() throws Exception {
-		Game game = new Game();
 		KalahMovedResponse kalahMovedResponse = new KalahMovedResponse();
-		doNothing().when(kalahValidator).validate(anyString(), anyInt());
+		doNothing().when(kalahValidator).validatePitId(pitId);
 		when(kalahService.play(anyString(), anyInt())).thenReturn(game);
 		when(kalahMapper.mapToMovedDto(game)).thenReturn(kalahMovedResponse);
-		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(anyString(), anyInt());
+		ResponseEntity<KalahMovedResponse> responseEntity = kalahController.playGame(anyString(), pitId);
 
-		verify(kalahValidator).validate(anyString(), anyInt());
+		verify(kalahValidator).validatePitId(pitId);
 		verify(kalahService).play(anyString(), anyInt());
 		verify(kalahMapper).mapToMovedDto(game);
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
@@ -81,11 +94,11 @@ public class KalahControllerTest {
 	@Test(expected = InvalidIdException.class)
 	public void testPlayGameThrowExceptionIfInvalidGameId() throws Exception {
 		Game game = new Game();
-		doThrow(InvalidIdException.class).when(kalahValidator).validate(anyString(), anyInt());
-		kalahController.playGame(anyString(), anyInt());
+		doThrow(InvalidIdException.class).when(kalahValidator).validatePitId(pitId);
+		kalahController.playGame(anyString(), pitId);
 
-		verify(kalahValidator).validate(anyString(), anyInt());
-		verify(kalahService, never()).play(anyString(), anyInt());
+		verify(kalahValidator).validatePitId(pitId);
+		verify(kalahService, never()).play(anyString(), pitId);
 		verify(kalahMapper, never()).mapToMovedDto(game);
 	}
 

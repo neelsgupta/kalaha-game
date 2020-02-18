@@ -1,10 +1,11 @@
 package com.game.kalah.mapper;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,7 +24,6 @@ public class KalahMapperTest {
 	private KalahMapper kalahMapper;
 
 	private String gameId = "anyId";
-	private String gameUri = "anyUri";
 
 	@Test
 	public void testCreateGame() {

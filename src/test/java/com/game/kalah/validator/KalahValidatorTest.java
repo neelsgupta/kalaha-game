@@ -13,22 +13,29 @@ public class KalahValidatorTest {
 	@InjectMocks
 	private KalahValidatorImpl kalahValidator;
 
-	private String gameId = "anyGameId";
-	private Integer pitId = 1;
+	private Integer validPitId = 1;
+	private Integer pitIdOutOfBound = 25;
+	private Integer firstPlayerHomePitId = 7;
+	private Integer secondPlayerHomePitId = 14;
 
 	@Test
-	public void testValidation() throws Exception {
-		// kalahValidator.validate(Mockito.anyString(), Mockito.anyString());
+	public void testValidationForValidPitId() {
+		kalahValidator.validatePitId(validPitId);
 	}
 
 	@Test(expected = InvalidIdException.class)
-	public void testValidationThrowInvalidIdExceptionIfInvalidGameId() {
-		kalahValidator.validate(gameId, pitId);
+	public void testValidationThrowInvalidIdExceptionIfInvalidPitId() throws InvalidIdException {
+		kalahValidator.validatePitId(pitIdOutOfBound);
 	}
 
-	// @Test(expected = InvalidIdException.class)
-	public void testValidationThrowInvalidIdExceptionIfInvalidPitId() throws InvalidIdException {
-		// kalahValidator.validate(Mockito.anyString(), Mockito.anyInt());
+	@Test(expected = InvalidIdException.class)
+	public void testValidationThrowInvalidIdExceptionIfPitIdIsFirstPlayerHome() throws InvalidIdException {
+		kalahValidator.validatePitId(firstPlayerHomePitId);
+	}
+
+	@Test(expected = InvalidIdException.class)
+	public void testValidationThrowInvalidIdExceptionIfPitIdIsSecondPlayerHome() throws InvalidIdException {
+		kalahValidator.validatePitId(secondPlayerHomePitId);
 	}
 
 }

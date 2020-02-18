@@ -6,6 +6,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,7 +19,7 @@ import com.game.kalah.domain.GameStatus;
 import com.game.kalah.exception.GameEndedException;
 import com.game.kalah.exception.InvalidIdException;
 import com.game.kalah.mapper.KalahMapper;
-import com.game.kalah.repository.KalahRepository;
+import com.game.kalah.repository.GameRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KalahServiceTest {
@@ -29,10 +31,10 @@ public class KalahServiceTest {
 	private KalahMapper kalahMapper;
 
 	@Mock
-	private KalahRepository repository;
+	private GameRepository repository;
 
 	@Mock
-	private KalahHandler gameService;
+	private KalahHandler kalahHandler;
 
 	private String gameId = "anyGameId";
 	private Integer pitId = 1;
@@ -41,51 +43,52 @@ public class KalahServiceTest {
 	public void testCreateGame() {
 		Game game = new Game();
 		when(kalahMapper.createGame()).thenReturn(game);
-		doNothing().when(repository).create(game);
+		when(repository.save(game)).thenReturn(game);
 		kalahService.create();
 
 		verify(kalahMapper).createGame();
-		verify(repository).create(game);
+		verify(repository).save(game);
 	}
 
 	@Test
 	public void testPlayGame() throws Exception {
 		Game game = new Game();
 		game.setGameStatus(GameStatus.IN_PROGRESS);
-		when(repository.get(gameId)).thenReturn(game);
-		doNothing().when(gameService).makeMove(game, pitId);
-		doNothing().when(repository).save(gameId, game);
+		Optional<Game> optionalGame = Optional.ofNullable(game);
+		when(repository.findById(gameId)).thenReturn(optionalGame);
+		doNothing().when(kalahHandler).makeMove(game, pitId);
+		when(repository.save(game)).thenReturn(game);
 		kalahService.play(gameId, pitId);
 
-		verify(repository).get(gameId);
-		verify(gameService).makeMove(game, pitId);
-		verify(repository).save(gameId, game);
-		verify(repository, never()).delete(gameId);
+		verify(repository).findById(gameId);
+		verify(kalahHandler).makeMove(game, pitId);
+		verify(repository).save(game);
+		verify(repository, never()).delete(game);
 	}
 
 	@Test(expected = InvalidIdException.class)
 	public void testPlayGameThrowExceptionIfGameNotExisted() throws Exception {
 		Game game = new Game();
-		doThrow(InvalidIdException.class).when(repository).get(gameId);
+		doThrow(InvalidIdException.class).when(repository).findById(gameId);
 		kalahService.play(gameId, pitId);
 
-		verify(repository).get(gameId);
-		verify(gameService, never()).makeMove(game, pitId);
-		verify(repository, never()).save(gameId, game);
-		verify(repository, never()).delete(gameId);
+		verify(repository).findById(gameId);
+		verify(kalahHandler, never()).makeMove(game, pitId);
+		verify(repository, never()).save( game);
+		verify(repository, never()).delete(game);
 	}
 
 	@Test(expected = GameEndedException.class)
 	public void testPlayGameThrowExceptionIfGameNotInProgress() throws Exception {
 		Game game = new Game();
-		// doNothing().when(repository).delete(gameId);
-		when(repository.get(gameId)).thenReturn(game);
+		Optional<Game> optionalGame = Optional.ofNullable(game);
+		when(repository.findById(gameId)).thenReturn(optionalGame);
 		kalahService.play(gameId, pitId);
 
-		verify(repository).get(gameId);
-		verify(repository).delete(gameId);
-		verify(gameService, never()).makeMove(game, pitId);
-		verify(repository, never()).save(gameId, game);
+		verify(repository).findById(gameId);
+		verify(repository).delete(game);
+		verify(kalahHandler, never()).makeMove(game, pitId);
+		verify(repository, never()).save( game);
 	}
 
 }
