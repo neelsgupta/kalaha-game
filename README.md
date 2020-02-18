@@ -1,5 +1,5 @@
-#Kalah-Game-Application
-
+#Kalah-Game-Application 
+Map as In memory db
 ## Description
  The general rules of the game are explained on Wikipedia: https://en.wikipedia.org/wiki/Kalah. Each of the two players has ​**​six pits​** ​in front of him/her. To the right of the six pits, each player has a larger pit, his Kalah or house. At the start of the game, six stones are put in each pit. 
 The player who begins picks up all the stones in any of their own pits, and sows the stones on to the right, one in each of the following pits, including his own Kalah. No stones are put in the opponent's' Kalah. If the players last stone lands in his own Kalah, he gets another turn. This can be repeated any number of times before it's the other player's turn. 
