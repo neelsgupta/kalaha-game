@@ -64,5 +64,4 @@ public class Game {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
 }

@@ -55,7 +55,6 @@ public class KalahServiceImpl implements KalahService {
 		Game game = get(gameId);
 		checkGameStatus(game);
 		kalahHandler.makeMove(game, pitId);
-
 		log.info("game play method ended for gameId: " + gameId);
 		return game;
 	}
